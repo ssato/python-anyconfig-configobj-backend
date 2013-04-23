@@ -1,0 +1,2 @@
+[anyconfig_backends]
+anyconfig_configobj_backend=anyconfig.backend.configobj_:ConfigObjParser

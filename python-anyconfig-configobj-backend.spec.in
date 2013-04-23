@@ -1,0 +1,102 @@
+%if 0%{?fedora} > 16
+%global with_python3 1
+%endif
+%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
+
+# disable debuginfo
+%define debug_package %{nil}
+
+%define pkgname anyconfig-configobj-backend
+
+
+Name:           python-%{pkgname}
+Version:        @VERSION@
+Release:        1%{?dist}
+Summary:        ConfigObj backend for anyconfig
+Group:          Development/Libraries
+License:        MIT
+URL:            https://github.com/ssato/%{name}
+#Source0:        https://github.com/ssato/%{name}/tarball/master/%{name}-%{version}.tar.gz
+Source0:        %{pkgname}-%{version}.tar.gz
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildArch:      noarch
+BuildRequires:  python-setuptools
+Requires:       python-anyconfig
+%if 0%{?with_python3}
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+%endif
+
+
+%description
+This is ConfigObj backend module for anyconfig.
+
+Anyconfig is a python library to provide generic access to configuration files
+in some formats such like INI, JSON and YAML.
+
+%if 0%{?with_python3}
+%package -n python3-%{pkgname}
+Summary:        ConfigObj backend for anyconfig
+Group:          Development/Libraries
+Requires:       python3-anyconfig
+
+%description -n python3-%{pkgname}
+This is ConfigObj backend module for anyconfig.
+
+Anyconfig is a python library to provide generic access to configuration files
+in some formats such like INI, JSON and YAML.
+%endif
+
+
+%prep
+%setup -q -n %{pkgname}-%{version}
+
+%if 0%{?with_python3}
+rm -rf %{py3dir}
+cp -a . %{py3dir}
+%endif
+
+
+%build
+%{__python} setup.py build
+
+%if 0%{?with_python3}
+pushd %{py3dir}
+%{__python3} setup.py build
+popd
+%endif
+
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
+rm -f $(find $RPM_BUILD_ROOT%{python_sitelib}/ -name '__init__.py*')
+
+%if 0%{?with_python3}
+pushd %{py3dir}
+%{__python3} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
+rm -f $(find $RPM_BUILD_ROOT%{python3_sitelib}/ -name '__init__.py*')
+popd
+%endif
+
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+
+%files
+%defattr(-,root,root,-)
+%doc README.rst
+%{python_sitelib}/*
+
+%if 0%{?with_python3}
+%files -n python3-%{pkgname}
+%defattr(644,root,root,755)
+%doc README.rst
+%{python3_sitelib}/*
+%endif
+
+
+%changelog
+* Tue Apr 23 2013 Satoru SATOH <ssato@redhat.com> - 0.0.1-1
+- Initial packaging
