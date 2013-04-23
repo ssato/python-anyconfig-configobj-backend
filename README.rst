@@ -27,7 +27,7 @@ or::
 and install built RPMs. 
 
 Otherwise, try usual ways to build and/or install python modules such like
-'easy_install anyconfig-configobj-backend', 'python setup.py bdist', etc.
+'python setup.py bdist', etc.
 
 Test Status
 =============
