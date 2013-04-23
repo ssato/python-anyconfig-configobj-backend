@@ -3,9 +3,7 @@
 # License: MIT
 #
 from configobj import ConfigObj
-
 from anyconfig.compat import StringIO, iteritems
-from anyconfig.globals import LOGGER as logging
 
 import anyconfig.backend.base as Base
 import sys
