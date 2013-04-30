@@ -3,13 +3,10 @@
 # License: MIT
 #
 from configobj import ConfigObj
-from anyconfig.compat import StringIO, iteritems
-
-import anyconfig.backend.base as Base
-import sys
+from anyconfig.backend.base import ConfigParser, mk_opt_args
 
 
-class ConfigObjParser(Base.ConfigParser):
+class ConfigObjParser(ConfigParser):
     _type = "configobj"
     _priority = 10
     _supported = True
@@ -35,7 +32,7 @@ class ConfigObjParser(Base.ConfigParser):
         """
         :param data: Data to dump :: dict
         """
-        conf = ConfigObj(**Base.mk_opt_args(cls._dump_opts, kwargs))
+        conf = ConfigObj(**mk_opt_args(cls._dump_opts, kwargs))
         conf.update(data)
         conf.filename = None
 
@@ -47,7 +44,7 @@ class ConfigObjParser(Base.ConfigParser):
         :param data: Data to dump :: dict
         :param config_path: Dump destination file path
         """
-        conf = ConfigObj(**Base.mk_opt_args(cls._dump_opts, kwargs))
+        conf = ConfigObj(**mk_opt_args(cls._dump_opts, kwargs))
         conf.update(data)
 
         conf.write(open(config_path, 'w'))
