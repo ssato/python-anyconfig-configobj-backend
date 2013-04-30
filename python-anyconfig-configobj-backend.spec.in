@@ -97,7 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Tue Apr 23 2013 Satoru SATOH <ssato@redhat.com> - 0.0.2-1
+* Tue Apr 30 2013 Satoru SATOH <ssato@redhat.com> - 0.0.2-1
 - Simplify the implementation by following the internal API changes in the
   config parser base class
 - Refactor the RPM SPEC
