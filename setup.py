@@ -9,7 +9,7 @@ curdir = os.getcwd()
 sys.path.append(curdir)
 
 PACKAGE = "anyconfig-configobj-backend"
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 
 # For daily snapshot versioning mode:
 if os.environ.get("_SNAPSHOT_BUILD", None) is not None:
