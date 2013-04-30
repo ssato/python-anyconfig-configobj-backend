@@ -1,13 +1,11 @@
-%if 0%{?fedora} > 16
+%if 0%{?fedora}
 %global with_python3 1
 %endif
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 
 # disable debuginfo
 %define debug_package %{nil}
-
 %define pkgname anyconfig-configobj-backend
-
 
 Name:           python-%{pkgname}
 Version:        @VERSION@
@@ -20,6 +18,7 @@ URL:            https://github.com/ssato/%{name}
 Source0:        %{pkgname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
+BuildRequires:  python-devel
 BuildRequires:  python-setuptools
 Requires:       python-anyconfig
 %if 0%{?with_python3}
@@ -98,5 +97,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 23 2013 Satoru SATOH <ssato@redhat.com> - 0.0.2-1
+- Simplify the implementation by following the internal API changes in the
+  config parser base class
+- Refactor the RPM SPEC
+
 * Tue Apr 23 2013 Satoru SATOH <ssato@redhat.com> - 0.0.1-1
 - Initial packaging
