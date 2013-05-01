@@ -3,7 +3,7 @@
 # License: MIT
 #
 from configobj import ConfigObj
-from anyconfig.backend.base import ConfigParser, mk_opt_args
+from anyconfig.backend.base import ConfigParser
 
 
 class ConfigObjParser(ConfigParser):
@@ -23,6 +23,8 @@ class ConfigObjParser(ConfigParser):
     def load_impl(cls, config_fp, **kwargs):
         """
         :param config_fp:  Config file object
+        :param kwargs: backend-specific optional keyword parameters :: dict
+
         :return: dict object holding config parameters
         """
         return ConfigObj(config_fp)
@@ -31,8 +33,11 @@ class ConfigObjParser(ConfigParser):
     def dumps_impl(cls, data, **kwargs):
         """
         :param data: Data to dump :: dict
+        :param kwargs: backend-specific optional keyword parameters :: dict
+
+        :return: string represents the configuration
         """
-        conf = ConfigObj(**mk_opt_args(cls._dump_opts, kwargs))
+        conf = ConfigObj(**kwargs)
         conf.update(data)
         conf.filename = None
 
@@ -43,8 +48,9 @@ class ConfigObjParser(ConfigParser):
         """
         :param data: Data to dump :: dict
         :param config_path: Dump destination file path
+        :param kwargs: backend-specific optional keyword parameters :: dict
         """
-        conf = ConfigObj(**mk_opt_args(cls._dump_opts, kwargs))
+        conf = ConfigObj(**kwargs)
         conf.update(data)
 
         conf.write(open(config_path, 'w'))
