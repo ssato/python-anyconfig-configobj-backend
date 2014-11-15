@@ -2,6 +2,6 @@ include MANIFEST.in
 include README.*
 include LICENSE.MIT
 include python-anyconfig-configobj-backend.spec*
-include aux/*
+include pkg/*
 include setup.py
 recursive-include anyconfig_configobj_backend *.py
