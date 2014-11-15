@@ -4,4 +4,4 @@ include LICENSE.MIT
 include python-anyconfig-configobj-backend.spec*
 include aux/*
 include setup.py
-recursive-include anyconfig *.py
+recursive-include anyconfig_configobj_backend *.py

@@ -8,8 +8,7 @@ import sys
 curdir = os.getcwd()
 sys.path.append(curdir)
 
-PACKAGE = "anyconfig-configobj-backend"
-VERSION = "0.0.2"
+from anyconfig_configobj import PACKAGE, VERSION
 
 # For daily snapshot versioning mode:
 if os.environ.get("_SNAPSHOT_BUILD", None) is not None:
@@ -94,8 +93,8 @@ setup(name=PACKAGE,
     tests_require=['nose>=1.0', 'pep8'],
     #packages=find_packages(),
     packages=[
-        "anyconfig.backend",
-        "anyconfig.backend.tests",
+        "anyconfig_configobj_backend",
+        "anyconfig_configobj_backend.tests",
     ],
     include_package_data=True,
     cmdclass={
