@@ -8,7 +8,11 @@ import sys
 curdir = os.getcwd()
 sys.path.append(curdir)
 
-from anyconfig_configobj import PACKAGE, VERSION
+# Ugly, but necessary to avoid extra dependency on build time.
+#from anyconfig_configobj_backend.globals import PACKAGE, AUTHOR, VERSION
+PACKAGE = "anyconfig-configobj-backend"
+AUTHOR = "Satoru SATOH"
+VERSION = "0.0.3"
 
 # For daily snapshot versioning mode:
 if os.environ.get("_SNAPSHOT_BUILD", None) is not None:
@@ -16,6 +20,13 @@ if os.environ.get("_SNAPSHOT_BUILD", None) is not None:
     VERSION = VERSION + datetime.datetime.now().strftime(".%Y%m%d")
 
 data_files = []
+
+
+# see: http://setupext-pip.readthedocs.org/en/latest/requirements-files.html
+def read_requirements_from_file(req_name):
+    with open(os.path.join(curdir, req_name), 'r') as req_file:
+        return [line[0:line.find('#')] if '#' in line else line.strip()
+                for line in req_file]
 
 
 class SrpmCommand(Command):
@@ -72,7 +83,7 @@ setup(name=PACKAGE,
     version=VERSION,
     description="Generic access to configuration files in some formats",
     long_description=open("README.rst").read(),
-    author="Satoru SATOH",
+    author=AUTHOR,
     author_email="ssato@redhat.com",
     license="MIT",
     url="https://github.com/ssato/python-anyconfig-configobj-backend",
@@ -90,7 +101,8 @@ setup(name=PACKAGE,
         "Topic :: Utilities",
         "License :: OSI Approved :: MIT License",
     ],
-    tests_require=['nose>=1.0', 'pep8'],
+    install_requires=read_requirements_from_file("pkg/requirements.txt"),
+    tests_require=read_requirements_from_file("pkg/test_requirements.txt"),
     #packages=find_packages(),
     packages=[
         "anyconfig_configobj_backend",
@@ -101,7 +113,7 @@ setup(name=PACKAGE,
         "srpm": SrpmCommand,
         "rpm":  RpmCommand,
     },
-    entry_points=open(os.path.join(curdir, "aux/entry_points.txt")).read(),
+    entry_points=open(os.path.join(curdir, "pkg/entry_points.txt")).read(),
 )
 
 # vim:sw=4:ts=4:et:
