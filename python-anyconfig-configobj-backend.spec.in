@@ -21,6 +21,8 @@ BuildArch:      noarch
 BuildRequires:  python-devel
 BuildRequires:  python-setuptools
 Requires:       python-anyconfig
+Requires:       python-configobj
+Requires:       python-setuptools
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
@@ -37,6 +39,8 @@ in some formats such like INI, JSON and YAML.
 Summary:        ConfigObj backend for anyconfig
 Group:          Development/Libraries
 Requires:       python3-anyconfig
+Requires:       python3-configobj
+Requires:       python3-setuptools
 
 %description -n python3-%{pkgname}
 This is ConfigObj backend module for anyconfig.
