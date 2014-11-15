@@ -1,4 +1,5 @@
-from .configobj_ import ConfigObjParser, PACKAGE, AUTHOR, VERSION
+from .globals import PACKAGE, AUTHOR, VERSION
+from .configobj_ import ConfigObjParser
 
 __author__ = AUTHOR
 __version__ = VERSION
