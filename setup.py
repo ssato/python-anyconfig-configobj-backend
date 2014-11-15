@@ -1,7 +1,5 @@
-from setuptools import setup, Command, find_packages
+from setuptools import setup, Command
 
-import datetime
-import glob
 import os
 import sys
 
@@ -9,7 +7,7 @@ curdir = os.getcwd()
 sys.path.append(curdir)
 
 # Ugly, but necessary to avoid extra dependency on build time.
-#from anyconfig_configobj_backend.globals import PACKAGE, AUTHOR, VERSION
+# from anyconfig_configobj_backend.globals import PACKAGE, AUTHOR, VERSION
 PACKAGE = "anyconfig-configobj-backend"
 AUTHOR = "Satoru SATOH"
 VERSION = "0.0.3"
@@ -79,41 +77,37 @@ class RpmCommand(SrpmCommand):
     build_stage = "b"
 
 
+CLASSIFIERS = """\
+Development Status :: 3 - Alpha
+Intended Audience :: Developers
+Programming Language :: Python
+Programming Language :: Python :: 2.6
+Programming Language :: Python :: 2.7
+Programming Language :: Python :: 3
+Environment :: Console
+Operating System :: OS Independent
+Topic :: Software Development :: Libraries :: Python Modules
+Topic :: Text Processing :: Markup
+Topic :: Utilities
+License :: OSI Approved :: MIT License
+""".splitlines()
+
+
 setup(name=PACKAGE,
-    version=VERSION,
-    description="Generic access to configuration files in some formats",
-    long_description=open("README.rst").read(),
-    author=AUTHOR,
-    author_email="ssato@redhat.com",
-    license="MIT",
-    url="https://github.com/ssato/python-anyconfig-configobj-backend",
-    classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Intended Audience :: Developers",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3",
-        "Environment :: Console",
-        "Operating System :: OS Independent",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: Text Processing :: Markup",
-        "Topic :: Utilities",
-        "License :: OSI Approved :: MIT License",
-    ],
-    install_requires=read_requirements_from_file("pkg/requirements.txt"),
-    tests_require=read_requirements_from_file("pkg/test_requirements.txt"),
-    #packages=find_packages(),
-    packages=[
-        "anyconfig_configobj_backend",
-        "anyconfig_configobj_backend.tests",
-    ],
-    include_package_data=True,
-    cmdclass={
-        "srpm": SrpmCommand,
-        "rpm":  RpmCommand,
-    },
-    entry_points=open(os.path.join(curdir, "pkg/entry_points.txt")).read(),
-)
+      version=VERSION,
+      description="anyconfig backend for configobj configuration files",
+      long_description=open("README.rst").read(),
+      author=AUTHOR,
+      author_email="ssato@redhat.com",
+      license="MIT",
+      url="https://github.com/ssato/python-anyconfig-configobj-backend",
+      classifiers=CLASSIFIERS,
+      install_requires=read_requirements_from_file("pkg/requirements.txt"),
+      tests_require=read_requirements_from_file("pkg/test_requirements.txt"),
+      packages=["anyconfig_configobj_backend",
+                "anyconfig_configobj_backend.tests"],
+      include_package_data=True,
+      cmdclass={"srpm": SrpmCommand, "rpm":  RpmCommand},
+      entry_points=open(os.path.join(curdir, "pkg/entry_points.txt")).read())
 
 # vim:sw=4:ts=4:et:
