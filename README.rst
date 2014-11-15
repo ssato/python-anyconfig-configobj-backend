@@ -7,7 +7,6 @@ This is a backend module for anyconfig to support configobj library.
 * Author: Satoru SATOH <ssato@redhat.com>
 * License: MIT
 
-
 SEE ALSO:
 
 * anyconfig: https://pypi.python.org/pypi/anyconfig
