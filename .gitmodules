@@ -1,3 +1,0 @@
-[submodule "anyconfig"]
-	path = anyconfig
-	url = https://github.com/ssato/python-anyconfig.git
