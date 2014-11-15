@@ -6,11 +6,6 @@ from configobj import ConfigObj
 from anyconfig.backend.base import ConfigParser
 
 
-PACKAGE = "anyconfig-configobj-backend"
-AUTHOR = "Satoru SATOH"
-VERSION = "0.0.3"
-
-
 class ConfigObjParser(ConfigParser):
     _type = "configobj"
     _priority = 10
