@@ -1,9 +1,14 @@
 #
-# Copyright (C) 2013 Satoru SATOH <ssato @ redhat.com>
+# Copyright (C) 2013, 2014 Satoru SATOH <ssato @ redhat.com>
 # License: MIT
 #
 from configobj import ConfigObj
 from anyconfig.backend.base import ConfigParser
+
+
+PACKAGE = "anyconfig-configobj-backend"
+AUTHOR = "Satoru SATOH"
+VERSION = "0.0.3"
 
 
 class ConfigObjParser(ConfigParser):
