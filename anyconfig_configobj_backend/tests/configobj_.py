@@ -1,7 +1,8 @@
 #
-# Copyright (C) 2013, 2014 Satoru SATOH <ssato @ redhat.com>
+# Copyright (C) 2013 - 2015 Satoru SATOH <ssato @ redhat.com>
 # License: MIT
 #
+# pylint: disable=missing-docstring
 import anyconfig_configobj_backend.configobj as TT
 import os
 import tempfile
@@ -53,91 +54,91 @@ class Test(unittest.TestCase):
         self.assertFalse(TT.Parser.supports("/a/b/c/d.json"))
 
     def test_10_loads(self):
-        c = TT.Parser.loads(CONF_0)
+        conf = TT.Parser.loads(CONF_0)
 
-        self.assertEquals(c['keyword1'], 'value1')
-        self.assertEquals(c['keyword 2'], 'value 2')
-        self.assertEquals(c['section 1']['keyword 3'], 'value 3')
-        self.assertEquals(c['section 1']['keyword 4'],
+        self.assertEquals(conf['keyword1'], 'value1')
+        self.assertEquals(conf['keyword 2'], 'value 2')
+        self.assertEquals(conf['section 1']['keyword 3'], 'value 3')
+        self.assertEquals(conf['section 1']['keyword 4'],
                           ['value4', 'value 5', 'value 6'])
-        self.assertEquals(c['section 1']['sub-section']['keyword 5'],
+        self.assertEquals(conf['section 1']['sub-section']['keyword 5'],
                           'value 7')
-        self.assertEquals(c['section 1']['sub-section']['keyword 6'],
+        self.assertEquals(conf['section 1']['sub-section']['keyword 6'],
                           """A multiline value,
 that spans more than one line :-)
 The line breaks are included in the value.""")
         self.assertEquals(
-            c['section 1']['sub-section']['sub-sub-section']['keyword 7'],
+            conf['section 1']['sub-section']['sub-sub-section']['keyword 7'],
             'value 8'
         )
-        self.assertEquals(c['section 2']['keyword8'], 'value 9')
-        self.assertEquals(c['section 2']['keyword9'], 'value10')
+        self.assertEquals(conf['section 2']['keyword8'], 'value 9')
+        self.assertEquals(conf['section 2']['keyword9'], 'value10')
 
     def test_20_load(self):
-        c = TT.Parser.load(self.config_path)
+        conf = TT.Parser.load(self.config_path)
 
-        self.assertEquals(c['keyword1'], 'value1')
-        self.assertEquals(c['keyword 2'], 'value 2')
-        self.assertEquals(c['section 1']['keyword 3'], 'value 3')
-        self.assertEquals(c['section 1']['keyword 4'],
+        self.assertEquals(conf['keyword1'], 'value1')
+        self.assertEquals(conf['keyword 2'], 'value 2')
+        self.assertEquals(conf['section 1']['keyword 3'], 'value 3')
+        self.assertEquals(conf['section 1']['keyword 4'],
                           ['value4', 'value 5', 'value 6'])
-        self.assertEquals(c['section 1']['sub-section']['keyword 5'],
+        self.assertEquals(conf['section 1']['sub-section']['keyword 5'],
                           'value 7')
-        self.assertEquals(c['section 1']['sub-section']['keyword 6'],
+        self.assertEquals(conf['section 1']['sub-section']['keyword 6'],
                           """A multiline value,
 that spans more than one line :-)
 The line breaks are included in the value.""")
         self.assertEquals(
-            c['section 1']['sub-section']['sub-sub-section']['keyword 7'],
+            conf['section 1']['sub-section']['sub-sub-section']['keyword 7'],
             'value 8'
         )
-        self.assertEquals(c['section 2']['keyword8'], 'value 9')
-        self.assertEquals(c['section 2']['keyword9'], 'value10')
+        self.assertEquals(conf['section 2']['keyword8'], 'value 9')
+        self.assertEquals(conf['section 2']['keyword9'], 'value10')
 
     def test_30_dumps(self):
-        c = TT.Parser.loads(CONF_0)
-        s = TT.Parser.dumps(c)
-        c = TT.Parser.loads(s)
+        conf = TT.Parser.loads(CONF_0)
+        conf_s = TT.Parser.dumps(conf)
+        conf = TT.Parser.loads(conf_s)
 
-        self.assertEquals(c['keyword1'], 'value1')
-        self.assertEquals(c['keyword 2'], 'value 2')
-        self.assertEquals(c['section 1']['keyword 3'], 'value 3')
-        self.assertEquals(c['section 1']['keyword 4'],
+        self.assertEquals(conf['keyword1'], 'value1')
+        self.assertEquals(conf['keyword 2'], 'value 2')
+        self.assertEquals(conf['section 1']['keyword 3'], 'value 3')
+        self.assertEquals(conf['section 1']['keyword 4'],
                           ['value4', 'value 5', 'value 6'])
-        self.assertEquals(c['section 1']['sub-section']['keyword 5'],
+        self.assertEquals(conf['section 1']['sub-section']['keyword 5'],
                           'value 7')
-        self.assertEquals(c['section 1']['sub-section']['keyword 6'],
+        self.assertEquals(conf['section 1']['sub-section']['keyword 6'],
                           """A multiline value,
 that spans more than one line :-)
 The line breaks are included in the value.""")
         self.assertEquals(
-            c['section 1']['sub-section']['sub-sub-section']['keyword 7'],
+            conf['section 1']['sub-section']['sub-sub-section']['keyword 7'],
             'value 8'
         )
-        self.assertEquals(c['section 2']['keyword8'], 'value 9')
-        self.assertEquals(c['section 2']['keyword9'], 'value10')
+        self.assertEquals(conf['section 2']['keyword8'], 'value 9')
+        self.assertEquals(conf['section 2']['keyword9'], 'value10')
 
     def test_40_dump(self):
-        c = TT.Parser.loads(CONF_0)
-        TT.Parser.dump(c, self.config_path)
-        c = TT.Parser.load(self.config_path)
+        conf = TT.Parser.loads(CONF_0)
+        TT.Parser.dump(conf, self.config_path)
+        conf = TT.Parser.load(self.config_path)
 
-        self.assertEquals(c['keyword1'], 'value1')
-        self.assertEquals(c['keyword 2'], 'value 2')
-        self.assertEquals(c['section 1']['keyword 3'], 'value 3')
-        self.assertEquals(c['section 1']['keyword 4'],
+        self.assertEquals(conf['keyword1'], 'value1')
+        self.assertEquals(conf['keyword 2'], 'value 2')
+        self.assertEquals(conf['section 1']['keyword 3'], 'value 3')
+        self.assertEquals(conf['section 1']['keyword 4'],
                           ['value4', 'value 5', 'value 6'])
-        self.assertEquals(c['section 1']['sub-section']['keyword 5'],
+        self.assertEquals(conf['section 1']['sub-section']['keyword 5'],
                           'value 7')
-        self.assertEquals(c['section 1']['sub-section']['keyword 6'],
+        self.assertEquals(conf['section 1']['sub-section']['keyword 6'],
                           """A multiline value,
 that spans more than one line :-)
 The line breaks are included in the value.""")
         self.assertEquals(
-            c['section 1']['sub-section']['sub-sub-section']['keyword 7'],
+            conf['section 1']['sub-section']['sub-sub-section']['keyword 7'],
             'value 8'
         )
-        self.assertEquals(c['section 2']['keyword8'], 'value 9')
-        self.assertEquals(c['section 2']['keyword9'], 'value10')
+        self.assertEquals(conf['section 2']['keyword8'], 'value 9')
+        self.assertEquals(conf['section 2']['keyword9'], 'value10')
 
 # vim:sw=4:ts=4:et:

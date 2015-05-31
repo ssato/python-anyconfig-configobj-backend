@@ -1,7 +1,9 @@
 #
-# Copyright (C) 2013, 2014 Satoru SATOH <ssato @ redhat.com>
+# Copyright (C) 2013 - 2015 Satoru SATOH <ssato @ redhat.com>
 # License: MIT
 #
+"""configobj backend for anyconfig.
+"""
 from __future__ import absolute_import
 
 import configobj
@@ -9,6 +11,15 @@ import anyconfig.backend.base
 
 
 class Parser(anyconfig.backend.base.Parser):
+    """
+    Parser for Ini-like config files which configobj supports.
+
+    - Backend: configobj (https://pypi.python.org/pypi/configobj/)
+    - Limitations: None obvious
+    - Special options:
+
+      - All options passed to configobj.ConfigObj.__init__ should work.
+    """
     _type = "configobj"
     _priority = 10
     _supported = True
@@ -27,7 +38,7 @@ class Parser(anyconfig.backend.base.Parser):
 
         :return: dict object holding config parameters
         """
-        return configobj.ConfigObj(config_fp)
+        return configobj.ConfigObj(config_fp, **kwargs)
 
     @classmethod
     def dumps_impl(cls, data, **kwargs):
