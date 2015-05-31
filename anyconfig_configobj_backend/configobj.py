@@ -2,16 +2,16 @@
 # Copyright (C) 2013, 2014 Satoru SATOH <ssato @ redhat.com>
 # License: MIT
 #
-from configobj import ConfigObj
-from anyconfig.backend.base import ConfigParser
+from __future__ import absolute_import
+
+import configobj
+import anyconfig.backend.base
 
 
-class ConfigObjParser(ConfigParser):
+class Parser(anyconfig.backend.base.Parser):
     _type = "configobj"
     _priority = 10
     _supported = True
-    _extensions = ["ini"]
-
     _load_opts = ["cls", "configspec", "encoding", "interpolation",
                   "raise_errors", "list_values", "create_empty", "file_error",
                   "stringify", "indent_type", "default_encoding", "unrepr",
@@ -27,7 +27,7 @@ class ConfigObjParser(ConfigParser):
 
         :return: dict object holding config parameters
         """
-        return ConfigObj(config_fp)
+        return configobj.ConfigObj(config_fp)
 
     @classmethod
     def dumps_impl(cls, data, **kwargs):
@@ -37,7 +37,7 @@ class ConfigObjParser(ConfigParser):
 
         :return: string represents the configuration
         """
-        conf = ConfigObj(**kwargs)
+        conf = configobj.ConfigObj(**kwargs)
         conf.update(data)
         conf.filename = None
 
@@ -50,7 +50,7 @@ class ConfigObjParser(ConfigParser):
         :param config_path: Dump destination file path
         :param kwargs: backend-specific optional keyword parameters :: dict
         """
-        conf = ConfigObj(**kwargs)
+        conf = configobj.ConfigObj(**kwargs)
         conf.update(data)
 
         conf.write(open(config_path, 'w'))

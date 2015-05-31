@@ -2,7 +2,7 @@
 # Copyright (C) 2013, 2014 Satoru SATOH <ssato @ redhat.com>
 # License: MIT
 #
-import anyconfig_configobj_backend.configobj_ as TT
+import anyconfig_configobj_backend.configobj as TT
 import os
 import tempfile
 import unittest
@@ -39,7 +39,7 @@ keyword9 = value10     # an inline comment
 """
 
 
-class Test_ConfigObjParser(unittest.TestCase):
+class Test(unittest.TestCase):
 
     def setUp(self):
         (_, conf) = tempfile.mkstemp(prefix="ac-bc-test-")
@@ -50,11 +50,10 @@ class Test_ConfigObjParser(unittest.TestCase):
         os.remove(self.config_path)
 
     def test_00_supports(self):
-        self.assertTrue(TT.ConfigObjParser.supports("/a/b/c/d.ini"))
-        self.assertFalse(TT.ConfigObjParser.supports("/a/b/c/d.json"))
+        self.assertFalse(TT.Parser.supports("/a/b/c/d.json"))
 
     def test_10_loads(self):
-        c = TT.ConfigObjParser.loads(CONF_0)
+        c = TT.Parser.loads(CONF_0)
 
         self.assertEquals(c['keyword1'], 'value1')
         self.assertEquals(c['keyword 2'], 'value 2')
@@ -75,7 +74,7 @@ The line breaks are included in the value.""")
         self.assertEquals(c['section 2']['keyword9'], 'value10')
 
     def test_20_load(self):
-        c = TT.ConfigObjParser.load(self.config_path)
+        c = TT.Parser.load(self.config_path)
 
         self.assertEquals(c['keyword1'], 'value1')
         self.assertEquals(c['keyword 2'], 'value 2')
@@ -96,9 +95,9 @@ The line breaks are included in the value.""")
         self.assertEquals(c['section 2']['keyword9'], 'value10')
 
     def test_30_dumps(self):
-        c = TT.ConfigObjParser.loads(CONF_0)
-        s = TT.ConfigObjParser.dumps(c)
-        c = TT.ConfigObjParser.loads(s)
+        c = TT.Parser.loads(CONF_0)
+        s = TT.Parser.dumps(c)
+        c = TT.Parser.loads(s)
 
         self.assertEquals(c['keyword1'], 'value1')
         self.assertEquals(c['keyword 2'], 'value 2')
@@ -119,9 +118,9 @@ The line breaks are included in the value.""")
         self.assertEquals(c['section 2']['keyword9'], 'value10')
 
     def test_40_dump(self):
-        c = TT.ConfigObjParser.loads(CONF_0)
-        TT.ConfigObjParser.dump(c, self.config_path)
-        c = TT.ConfigObjParser.load(self.config_path)
+        c = TT.Parser.loads(CONF_0)
+        TT.Parser.dump(c, self.config_path)
+        c = TT.Parser.load(self.config_path)
 
         self.assertEquals(c['keyword1'], 'value1')
         self.assertEquals(c['keyword 2'], 'value 2')
