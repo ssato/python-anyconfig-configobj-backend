@@ -2,6 +2,8 @@
 python-anyconfig-configobj-backend
 ===================================
 
+*This repo was suspended as this module was merged into anyconfig itself and is now maintained in it.* [https://github.com/ssato/python-anyconfig/commit/83b6f9820b62bb4143da68c6063e478d5e1a588b]
+
 This is a backend module for anyconfig to support configobj library.
 
 * Author: Satoru SATOH <ssato@redhat.com>
