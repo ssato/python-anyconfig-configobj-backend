@@ -7,10 +7,10 @@
 from __future__ import absolute_import
 import os.path
 
-import anyconfig.backend.configobj as TT
-import tests.common as TBC
-
 from anyconfig.compat import OrderedDict as ODict
+
+import anyconfig_configobj_backend as TT
+import tests.common as TBC
 
 
 _ML_0 = """A multiline value,
