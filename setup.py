@@ -1,4 +1,4 @@
-from setuptools import setup, Command, find_packages
+from setuptools import setup, Command
 
 import datetime
 import os
@@ -86,7 +86,7 @@ setup(name=PACKAGE,
       classifiers=_CLASSIFIERS,
       install_require=_parse_requirements_txt(),
       tests_require=_parse_requirements_txt("pkg/test_requirements.txt"),
-      packages=find_packages(),
+      packages=["anyconfig_configobj_backend"],
       include_package_data=True,
       cmdclass=dict(srpm=SrpmCommand, rpm=RpmCommand),
       entry_points=open(os.path.join(os.curdir,
