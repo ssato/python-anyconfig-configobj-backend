@@ -2,144 +2,50 @@
 # Copyright (C) 2013 - 2018 Satoru SATOH <ssato @ redhat.com>
 # License: MIT
 #
-# pylint: disable=missing-docstring
-import os
-import tempfile
-import unittest
+# pylint: disable=missing-docstring,invalid-name,too-few-public-methods
+# pylint: disable=ungrouped-imports
+from __future__ import absolute_import
+import os.path
 
-import anyconfig_configobj_backend.configobj as TT
+import anyconfig.backend.configobj as TT
+import tests.common as TBC
+
+from anyconfig.compat import OrderedDict as ODict
 
 
-CONF_0 = """\
-# This is the 'initial_comment'
-# Which may be several lines
-keyword1 = value1
-'keyword 2' = 'value 2'
-
-[ "section 1" ]
-# This comment goes with keyword 3
-keyword 3 = value 3
-'keyword 4' = value4, value 5, 'value 6'
-
-    [[ sub-section ]]    # an inline comment
-    # sub-section is inside "section 1"
-    'keyword 5' = 'value 7'
-    'keyword 6' = '''A multiline value,
+_ML_0 = """A multiline value,
 that spans more than one line :-)
-The line breaks are included in the value.'''
+The line breaks are included in the value."""
 
-        [[[ sub-sub-section ]]]
-        # sub-sub-section is *in* 'sub-section'
-        # which is in 'section 1'
-        'keyword 7' = 'value 8'
+CNF_0 = ODict((('keyword1', 'value1'),
+               ('keyword 2', 'value 2'),
+               ('section 1',
+                ODict((('keyword 3', 'value 3'),
+                       ('keyword 4', ['value4', 'value 5', 'value 6']),
+                       ('sub-section',
+                        ODict((('keyword 5', 'value 7'),
+                               ('keyword 6', _ML_0),
+                               ('sub-sub-section',
+                                ODict((('keyword 7', 'value 8'), ))))))))),
+               ('section 2',
+                ODict((('keyword8', 'value 9'), ('keyword9', 'value10'))))))
 
-[section 2]    # an inline comment
-keyword8 = "value 9"
-keyword9 = value10     # an inline comment
-# The 'final_comment'
-# Which also may be several lines
-"""
+
+class HasParserTrait(TBC.HasParserTrait):
+
+    psr = TT.Parser()
+    cnf = CNF_0
+    cnf_s = open(os.path.join(TBC.selfdir(), "0.configobj")).read()
 
 
-class Test(unittest.TestCase):
+class Test_10(TBC.Test_10_dumps_and_loads, HasParserTrait):
 
-    def setUp(self):
-        (_, conf) = tempfile.mkstemp(prefix="ac-bc-test-")
-        open(conf, 'w').write(CONF_0)
-        self.config_path = conf
+    load_options = dict(raise_errors=True)
+    dump_options = dict(indent_type="  ")
 
-    def tearDown(self):
-        os.remove(self.config_path)
 
-    def test_00_supports(self):
-        self.assertFalse(TT.Parser.supports("/a/b/c/d.json"))
+class Test_20(TBC.Test_10_dumps_and_loads, HasParserTrait):
 
-    def test_10_loads(self):
-        conf = TT.Parser.loads(CONF_0)
-
-        self.assertEquals(conf['keyword1'], 'value1')
-        self.assertEquals(conf['keyword 2'], 'value 2')
-        self.assertEquals(conf['section 1']['keyword 3'], 'value 3')
-        self.assertEquals(conf['section 1']['keyword 4'],
-                          ['value4', 'value 5', 'value 6'])
-        self.assertEquals(conf['section 1']['sub-section']['keyword 5'],
-                          'value 7')
-        self.assertEquals(conf['section 1']['sub-section']['keyword 6'],
-                          """A multiline value,
-that spans more than one line :-)
-The line breaks are included in the value.""")
-        self.assertEquals(
-            conf['section 1']['sub-section']['sub-sub-section']['keyword 7'],
-            'value 8'
-        )
-        self.assertEquals(conf['section 2']['keyword8'], 'value 9')
-        self.assertEquals(conf['section 2']['keyword9'], 'value10')
-
-    def test_20_load(self):
-        conf = TT.Parser.load(self.config_path)
-
-        self.assertEquals(conf['keyword1'], 'value1')
-        self.assertEquals(conf['keyword 2'], 'value 2')
-        self.assertEquals(conf['section 1']['keyword 3'], 'value 3')
-        self.assertEquals(conf['section 1']['keyword 4'],
-                          ['value4', 'value 5', 'value 6'])
-        self.assertEquals(conf['section 1']['sub-section']['keyword 5'],
-                          'value 7')
-        self.assertEquals(conf['section 1']['sub-section']['keyword 6'],
-                          """A multiline value,
-that spans more than one line :-)
-The line breaks are included in the value.""")
-        self.assertEquals(
-            conf['section 1']['sub-section']['sub-sub-section']['keyword 7'],
-            'value 8'
-        )
-        self.assertEquals(conf['section 2']['keyword8'], 'value 9')
-        self.assertEquals(conf['section 2']['keyword9'], 'value10')
-
-    def test_30_dumps(self):
-        conf = TT.Parser.loads(CONF_0)
-        conf_s = TT.Parser.dumps(conf)
-        conf = TT.Parser.loads(conf_s)
-
-        self.assertEquals(conf['keyword1'], 'value1')
-        self.assertEquals(conf['keyword 2'], 'value 2')
-        self.assertEquals(conf['section 1']['keyword 3'], 'value 3')
-        self.assertEquals(conf['section 1']['keyword 4'],
-                          ['value4', 'value 5', 'value 6'])
-        self.assertEquals(conf['section 1']['sub-section']['keyword 5'],
-                          'value 7')
-        self.assertEquals(conf['section 1']['sub-section']['keyword 6'],
-                          """A multiline value,
-that spans more than one line :-)
-The line breaks are included in the value.""")
-        self.assertEquals(
-            conf['section 1']['sub-section']['sub-sub-section']['keyword 7'],
-            'value 8'
-        )
-        self.assertEquals(conf['section 2']['keyword8'], 'value 9')
-        self.assertEquals(conf['section 2']['keyword9'], 'value10')
-
-    def test_40_dump(self):
-        conf = TT.Parser.loads(CONF_0)
-        TT.Parser.dump(conf, self.config_path)
-        conf = TT.Parser.load(self.config_path)
-
-        self.assertEquals(conf['keyword1'], 'value1')
-        self.assertEquals(conf['keyword 2'], 'value 2')
-        self.assertEquals(conf['section 1']['keyword 3'], 'value 3')
-        self.assertEquals(conf['section 1']['keyword 4'],
-                          ['value4', 'value 5', 'value 6'])
-        self.assertEquals(conf['section 1']['sub-section']['keyword 5'],
-                          'value 7')
-        self.assertEquals(conf['section 1']['sub-section']['keyword 6'],
-                          """A multiline value,
-that spans more than one line :-)
-The line breaks are included in the value.""")
-        self.assertEquals(
-            conf['section 1']['sub-section']['sub-sub-section']['keyword 7'],
-            'value 8'
-        )
-        self.assertEquals(conf['section 2']['keyword8'], 'value 9')
-        self.assertEquals(conf['section 2']['keyword9'], 'value10')
+    pass
 
 # vim:sw=4:ts=4:et:
