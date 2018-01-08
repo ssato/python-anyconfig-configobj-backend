@@ -75,9 +75,6 @@ Requires:       python3-setuptools
 %py3_install
 %endif
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %files -n python2-%{pkgname}
 %defattr(-,root,root,-)
 %doc README.rst
