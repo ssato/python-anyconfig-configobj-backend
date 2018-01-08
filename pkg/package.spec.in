@@ -89,6 +89,17 @@ Requires:       python3-configobj
 %endif
 
 %changelog
+* Mon Jan  8 2018 Satoru SATOH <ssato@redhat.com> - 0.0.3-1
+- enhancement/fix: import a lot of enhancements and fixes from
+  (anyconfig)/tests/backend/configobj.py
+- enhancement/fix: import a lot of enhancements and fixes from
+  python-anyconfig-cbor-backend.git/setup.py
+- fix: pep8 was renamed to pycodestyle
+- fix: make it buildable w/ RHEL 7 environment
+- refactor/fix: clean up the RPM SPEC w/ using macros such as
+  py2_{build,install}, autosetup and bcond_with{,out}
+- other misc refactoring, code cleanups and fixes
+
 * Tue Apr 30 2013 Satoru SATOH <ssato@redhat.com> - 0.0.2-1
 - Simplify the implementation by following the internal API changes in the
   config parser base class
