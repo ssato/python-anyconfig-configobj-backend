@@ -1,12 +1,13 @@
 #
-# Copyright (C) 2013 - 2015 Satoru SATOH <ssato @ redhat.com>
+# Copyright (C) 2013 - 2018 Satoru SATOH <ssato @ redhat.com>
 # License: MIT
 #
 # pylint: disable=missing-docstring
-import anyconfig_configobj_backend.configobj as TT
 import os
 import tempfile
 import unittest
+
+import anyconfig_configobj_backend.configobj as TT
 
 
 CONF_0 = """\
