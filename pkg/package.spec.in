@@ -54,7 +54,6 @@ Requires:       python2-configobj
 Summary:        %{sumtxt}
 Requires:       python3-anyconfig
 Requires:       python3-configobj
-Requires:       python3-setuptools
 %{?python_provide:%python_provide python3-%{pkgname}}
 
 %description -n python3-%{pkgname} %{desctxt}
