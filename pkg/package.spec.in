@@ -50,7 +50,7 @@ Requires:       python2-configobj
 %description -n python2-%{pkgname} %{desctxt}
 
 %if %{with python3}
-%package -n python3-%{pkgname}
+%package     -n python3-%{pkgname}
 Summary:        %{sumtxt}
 Requires:       python3-anyconfig
 Requires:       python3-configobj
