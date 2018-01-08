@@ -76,13 +76,15 @@ Requires:       python3-setuptools
 %endif
 
 %files -n python2-%{pkgname}
-%defattr(-,root,root,-)
 %doc README.rst
+%if 0%{?rhel} == 7
+%{python_sitelib}/*
+%else
 %{python2_sitelib}/*
+%endif
 
 %if %{with python3}
 %files -n python3-%{pkgname}
-%defattr(644,root,root,755)
 %doc README.rst
 %{python3_sitelib}/*
 %endif
