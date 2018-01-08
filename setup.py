@@ -70,6 +70,9 @@ _CLASSIFIERS = ["Development Status :: 4 - Beta",
                 "License :: OSI Approved :: MIT License"]
 
 
+INST_REQ = [l.rstrip() for l in open("pkg/requirements.txt").readlines()
+            if l and not l.startswith('#')]
+
 TESTS_REQ = [l.rstrip() for l in open("pkg/test_requirements.txt").readlines()
              if l and not l.startswith('#')]
 
@@ -82,6 +85,7 @@ setup(name=PACKAGE,
       license="MIT",
       url="https://github.com/ssato/python-anyconfig-configobj-backend",
       classifiers=_CLASSIFIERS,
+      install_require=INST_REQ,
       tests_require=TESTS_REQ,
       packages=find_packages(),
       include_package_data=True,
