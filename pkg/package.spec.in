@@ -44,7 +44,11 @@ BuildRequires:  python3-setuptools
 %package     -n python2-%{pkgname}
 Summary:        %{sumtxt}
 Requires:       python2-anyconfig
+%if 0%{?rhel} == 7
+Requires:       python-configobj
+%else
 Requires:       python2-configobj
+%endif
 %{?python_provide:%python_provide python2-%{pkgname}}
 
 %description -n python2-%{pkgname} %{desctxt}
