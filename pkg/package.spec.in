@@ -100,6 +100,7 @@ Requires:       python3-configobj
   python-anyconfig-cbor-backend.git/setup.py
 - fix: pep8 was renamed to pycodestyle
 - fix: make it buildable w/ RHEL 7 environment
+- fix: add runtime requirements
 - refactor/fix: clean up the RPM SPEC w/ using macros such as
   py2_{build,install}, autosetup and bcond_with{,out}
 - other misc refactoring, code cleanups and fixes
