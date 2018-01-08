@@ -20,9 +20,6 @@ URL:            https://github.com/ssato/%{name}
 #Source0:        https://github.com/ssato/%{name}/tarball/master/%{name}-%{version}.tar.gz
 Source0:        %{pkgname}-%{version}.tar.gz
 BuildArch:      noarch
-Requires:       python-anyconfig
-Requires:       python-configobj
-Requires:       python-setuptools
 
 %description    %{desctxt}
 
@@ -44,12 +41,21 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 %endif
 
+%package     -n python2-%{pkgname}
+Summary:        %{sumtxt}
+Requires:       python2-anyconfig
+Requires:       python2-configobj
+%{?python_provide:%python_provide python2-%{pkgname}}
+
+%description    -n python2-%{pkgname} %{desctxt}
+
 %if %{with python3}
 %package -n python3-%{pkgname}
 Summary:        %{sumtxt}
 Requires:       python3-anyconfig
 Requires:       python3-configobj
 Requires:       python3-setuptools
+%{?python_provide:%python_provide python3-%{pkgname}}
 
 %description    -n python3-%{pkgname} %{desctxt}
 %endif
@@ -84,10 +90,10 @@ popd
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -n python2-%{pkgname}
 %defattr(-,root,root,-)
 %doc README.rst
-%{python_sitelib}/*
+%{python2_sitelib}/*
 
 %if %{with python3}
 %files -n python3-%{pkgname}
