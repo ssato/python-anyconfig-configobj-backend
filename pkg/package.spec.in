@@ -93,6 +93,10 @@ Requires:       python3-configobj
 %endif
 
 %changelog
+* Tue Jan  9 2018 Satoru SATOH <ssato@redhat.com> - 0.0.4-1
+- fix: do not install tests/*.py
+- fix: s/install_require/install_requires/ in setup.py
+
 * Mon Jan  8 2018 Satoru SATOH <ssato@redhat.com> - 0.0.3-1
 - enhancement/fix: import a lot of enhancements and fixes from
   (anyconfig)/tests/backend/configobj.py
