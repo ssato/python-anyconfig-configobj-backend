@@ -41,7 +41,7 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 %endif
 
-%package     -n python2-%{pkgname}
+%package        -n python2-%{pkgname}
 Summary:        %{sumtxt}
 Requires:       python2-anyconfig
 Requires:       python2-configobj
