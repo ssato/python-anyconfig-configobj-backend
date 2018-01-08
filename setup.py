@@ -8,7 +8,7 @@ import subprocess
 # Ugly, but necessary to avoid extra dependency on build time.
 # from anyconfig_configobj_backend.globals import PACKAGE, VERSION
 PACKAGE = "anyconfig-configobj-backend"
-VERSION = "0.0.3"
+VERSION = "0.0.4"
 
 # For daily snapshot versioning mode:
 if os.environ.get("_SNAPSHOT_BUILD", None) is not None:
