@@ -41,13 +41,13 @@ BuildRequires:  python3-setuptools
 
 %description    %{desctxt}
 
-%package        -n python2-%{pkgname}
+%package     -n python2-%{pkgname}
 Summary:        %{sumtxt}
 Requires:       python2-anyconfig
 Requires:       python2-configobj
 %{?python_provide:%python_provide python2-%{pkgname}}
 
-%description    -n python2-%{pkgname} %{desctxt}
+%description -n python2-%{pkgname} %{desctxt}
 
 %if %{with python3}
 %package -n python3-%{pkgname}
@@ -57,11 +57,11 @@ Requires:       python3-configobj
 Requires:       python3-setuptools
 %{?python_provide:%python_provide python3-%{pkgname}}
 
-%description    -n python3-%{pkgname} %{desctxt}
+%description -n python3-%{pkgname} %{desctxt}
 %endif
 
 %prep
-%autosetup -n %{pkgname}-%{version}
+%autosetup   -n %{pkgname}-%{version}
 
 %build
 %py2_build
@@ -75,7 +75,7 @@ Requires:       python3-setuptools
 %py3_install
 %endif
 
-%files -n python2-%{pkgname}
+%files       -n python2-%{pkgname}
 %doc README.rst
 %if 0%{?rhel} == 7
 %{python_sitelib}/*
@@ -84,7 +84,7 @@ Requires:       python3-setuptools
 %endif
 
 %if %{with python3}
-%files -n python3-%{pkgname}
+%files       -n python3-%{pkgname}
 %doc README.rst
 %{python3_sitelib}/*
 %endif
