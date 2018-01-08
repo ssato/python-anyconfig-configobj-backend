@@ -1,6 +1,7 @@
-flake8
+anyconfig
+configobj
+coveralls
+# flake8  # disabled until 'pkg_resources.VersionConflict' error.
 nose
 pycodestyle
 pylint
-configobj
-anyconfig
