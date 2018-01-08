@@ -1,6 +1,6 @@
 # disable debuginfo
-%define debug_package %{nil}
-%define pkgname anyconfig-configobj-backend
+%global debug_package %{nil}
+%global pkgname anyconfig-configobj-backend
 
 %global sumtxt Backend for python-anyconfig to load and dump configobj data
 
