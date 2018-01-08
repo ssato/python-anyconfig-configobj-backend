@@ -1,69 +1,107 @@
 #
-# Copyright (C) 2013 - 2015 Satoru SATOH <ssato @ redhat.com>
+# Copyright (C) 2013 - 2018 Satoru SATOH <ssato @ redhat.com>
 # License: MIT
 #
-"""configobj backend for anyconfig.
+r"""Configobj backend:
+
+- Format to support: configobj, http://goo.gl/JbP2Kp (readthedocs.org)
+- Requirements: configobj (https://pypi.python.org/pypi/configobj/)
+- Development Status :: 4 - Beta
+- Limitations: AFAIK, configobj does not keep the order of configuration items
+  and not have options to change this behavior like configparser, so this
+  backend does not keep the order of configuration items even if the ac_ordered
+  option was used.
+
+- Special options:
+
+  - All options except for 'infile' passed to configobj.ConfigObj.__init__
+    should work.
+
+  - See also: http://configobj.readthedocs.io/en/latest/configobj.html
+
+Chnagelog:
+
+.. versionchanged:: 0.5.0
+
+   - Now loading and dumping options are detected automatically from inspection
+     result if possible. Also these became not distinguished because these will
+     be passed to configobj.Configuration anyway.
 """
 from __future__ import absolute_import
 
+import os
 import configobj
 import anyconfig.backend.base
 
+from anyconfig.compat import getargspec
 
-class Parser(anyconfig.backend.base.Parser):
+
+try:
+    _LOAD_OPTS = [a for a in getargspec(configobj.ConfigObj).args
+                  if a not in "self infile".split()]
+except (TypeError, AttributeError):
+    _LOAD_OPTS = ("options configspec encoding interpolation raise_errors"
+                  "list_values create_empty file_error stringify"
+                  "indent_type default_encoding unrepr write_empty_values"
+                  "_inspec").split()
+
+
+def make_configobj(cnf, **kwargs):
+    """
+    Make a configobj.ConfigObj initalized with given config `cnf`.
+
+    :param cnf: Configuration data
+    :param kwargs: optional keyword parameters passed to ConfigObj.__init__
+
+    :return: An initialized configobj.ConfigObj instance
+    """
+    cobj = configobj.ConfigObj(**kwargs)
+    cobj.update(cnf)
+
+    return cobj
+
+
+def load(path_or_strm, container, **opts):
+    """
+    :param path_or_strm: input config file path or file/file-like object
+    :param container: callble to make a container object
+    :param opts: keyword options passed to :class:`configobj.ConfigObj`
+
+    :return: Mapping object
+    """
+    return container(configobj.ConfigObj(path_or_strm, **opts))
+
+
+class Parser(anyconfig.backend.base.StreamParser,
+             anyconfig.backend.base.BinaryFilesMixin):
     """
     Parser for Ini-like config files which configobj supports.
-
-    - Backend: configobj (https://pypi.python.org/pypi/configobj/)
-    - Limitations: None obvious
-    - Special options:
-
-      - All options passed to configobj.ConfigObj.__init__ should work.
     """
     _type = "configobj"
     _priority = 10
-    _supported = True
-    _load_opts = ["cls", "configspec", "encoding", "interpolation",
-                  "raise_errors", "list_values", "create_empty", "file_error",
-                  "stringify", "indent_type", "default_encoding", "unrepr",
-                  "_inspec", ]
-    _dump_opts = ["cls", "encoding", "list_values", "indent_type",
-                  "default_encoding", "unrepr", "write_empty_values", ]
+    _load_opts = _LOAD_OPTS  # options on dump will be just ignored.
+    _dump_opts = _LOAD_OPTS  # Likewise.
+    _ordered = True
 
-    @classmethod
-    def load_impl(cls, config_fp, **kwargs):
-        """
-        :param config_fp:  Config file object
-        :param kwargs: backend-specific optional keyword parameters :: dict
+    load_from_path = load_from_stream = anyconfig.backend.base.to_method(load)
 
-        :return: dict object holding config parameters
+    def dump_to_string(self, cnf, **kwargs):
         """
-        return configobj.ConfigObj(config_fp, **kwargs)
+        Dump config `cnf` to a string.
 
-    @classmethod
-    def dumps_impl(cls, data, **kwargs):
-        """
-        :param data: Data to dump :: dict
+        :param cnf: Configuration data to dump
         :param kwargs: backend-specific optional keyword parameters :: dict
 
         :return: string represents the configuration
         """
-        conf = configobj.ConfigObj(**kwargs)
-        conf.update(data)
-        conf.filename = None
+        return os.linesep.join(make_configobj(cnf, **kwargs).write())
 
-        return '\n'.join(conf.write())
-
-    @classmethod
-    def dump_impl(cls, data, config_path, **kwargs):
+    def dump_to_stream(self, cnf, stream, **kwargs):
         """
-        :param data: Data to dump :: dict
-        :param config_path: Dump destination file path
+        :param cnf: Configuration data to dump
+        :param stream: Config file or file-like object
         :param kwargs: backend-specific optional keyword parameters :: dict
         """
-        conf = configobj.ConfigObj(**kwargs)
-        conf.update(data)
-
-        conf.write(open(config_path, 'w'))
+        make_configobj(cnf, **kwargs).write(stream)
 
 # vim:sw=4:ts=4:et:
