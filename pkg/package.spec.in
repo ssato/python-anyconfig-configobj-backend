@@ -3,6 +3,12 @@
 %global pkgname anyconfig-configobj-backend
 
 %global sumtxt Backend for python-anyconfig to load and dump configobj data
+%global desctxt \
+This is a python backend module for python-anyconfig to load and dump configobj\
+data.\
+\
+python-anyconfig is a python library to provide common APIs to load dump\
+various configuration files like INI, JSON and YAML.
 
 Name:           python-%{pkgname}
 Version:        @VERSION@
@@ -18,11 +24,7 @@ Requires:       python-anyconfig
 Requires:       python-configobj
 Requires:       python-setuptools
 
-%description
-This is ConfigObj backend module for anyconfig.
-
-Anyconfig is a python library to provide generic access to configuration files
-in some formats such like INI, JSON and YAML.
+%description    %{desctxt}
 
 %if 0%{?fedora} || 0%{?rhel} > 7
 %bcond_without python3
@@ -49,11 +51,7 @@ Requires:       python3-anyconfig
 Requires:       python3-configobj
 Requires:       python3-setuptools
 
-%description -n python3-%{pkgname}
-This is ConfigObj backend module for anyconfig.
-
-Anyconfig is a python library to provide generic access to configuration files
-in some formats such like INI, JSON and YAML.
+%description    -n python3-%{pkgname} %{desctxt}
 %endif
 
 %prep
