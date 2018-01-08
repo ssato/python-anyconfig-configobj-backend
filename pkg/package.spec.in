@@ -2,10 +2,12 @@
 %define debug_package %{nil}
 %define pkgname anyconfig-configobj-backend
 
+%global sumtxt Backend for python-anyconfig to load and dump configobj data
+
 Name:           python-%{pkgname}
 Version:        @VERSION@
 Release:        1%{?dist}
-Summary:        ConfigObj backend for anyconfig
+Summary:        %{sumtxt}
 Group:          Development/Libraries
 License:        MIT
 URL:            https://github.com/ssato/%{name}
@@ -43,7 +45,7 @@ BuildRequires:  python3-setuptools
 
 %if %{with python3}
 %package -n python3-%{pkgname}
-Summary:        ConfigObj backend for anyconfig
+Summary:        %{sumtxt}
 Group:          Development/Libraries
 Requires:       python3-anyconfig
 Requires:       python3-configobj
