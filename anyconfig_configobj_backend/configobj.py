@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013 - 2018 Satoru SATOH <ssato @ redhat.com>
+# Copyright (C) 2013 - 2019 Satoru SATOH <satoru.satoh @ gmail.com>
 # License: MIT
 #
 r"""Configobj backend:
