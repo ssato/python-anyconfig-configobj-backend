@@ -35,7 +35,7 @@ class HasParserTrait(TBC.HasParserTrait):
 
     psr = TT.Parser()
     cnf = CNF_0
-    cnf_s = open(os.path.join(TBC.selfdir(), "0.configobj")).read()
+    cnf_s = open(os.path.join(TBC.selfdir(), "res/0.configobj")).read()
 
 
 class Test_10(TBC.Test_10_dumps_and_loads, HasParserTrait):
