@@ -2,7 +2,6 @@
 %global debug_package %{nil}
 %global pkgname anyconfig-configobj-backend
 
-%global sumtxt Backend for python-anyconfig to load and dump configobj data
 %global desctxt \
 This is a python backend module for python-anyconfig to load and dump configobj\
 data.\
@@ -13,7 +12,7 @@ various configuration files like INI, JSON and YAML.
 Name:           python-%{pkgname}
 Version:        @VERSION@
 Release:        1%{?dist}
-Summary:        %{sumtxt}
+Summary:        Backend for python-anyconfig to load and dump configobj data
 Group:          Development/Libraries
 License:        MIT
 URL:            https://github.com/ssato/%{name}
@@ -42,7 +41,7 @@ BuildRequires:  python3-setuptools
 %description    %{desctxt}
 
 %package     -n python2-%{pkgname}
-Summary:        %{sumtxt}
+Summary:        %{summary}
 Requires:       python2-anyconfig
 %if 0%{?rhel} == 7
 Requires:       python-configobj
@@ -55,7 +54,7 @@ Requires:       python2-configobj
 
 %if %{with python3}
 %package     -n python3-%{pkgname}
-Summary:        %{sumtxt}
+Summary:        %{summary}
 Requires:       python3-anyconfig
 Requires:       python3-configobj
 %{?python_provide:%python_provide python3-%{pkgname}}
