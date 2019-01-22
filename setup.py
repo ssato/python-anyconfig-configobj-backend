@@ -1,13 +1,10 @@
-from setuptools import setup, Command
+from __future__ import absolute_import
 
-import datetime
 import os
-import subprocess
+import setuptools
+import setuptools.command.bdist_rpm
 
 
-# Ugly, but necessary to avoid extra dependency on build time.
-# from anyconfig_configobj_backend.globals import PACKAGE, VERSION
-PACKAGE = "anyconfig-configobj-backend"
 VERSION = "0.0.4"
 
 # For daily snapshot versioning mode:
@@ -16,81 +13,28 @@ if os.environ.get("_SNAPSHOT_BUILD", None) is not None:
     VERSION = VERSION + datetime.datetime.now().strftime(".%Y%m%d")
 
 
-class SrpmCommand(Command):
+class bdist_rpm(setuptools.command.bdist_rpm.bdist_rpm):
+    """Override the default content of the RPM SPEC.
+    """
+    spec_tmpl = os.path.join(os.path.abspath(os.curdir),
+                             "pkg/package.spec.in")
 
-    user_options = []
-    build_stage = "s"
+    def _replace(self, line):
+        """Replace some strings in the RPM SPEC template"""
+        if "@VERSION@" in line:
+            return line.replace("@VERSION@", VERSION)
 
-    curdir = os.path.abspath(os.curdir)
-    rpmspec = os.path.join(curdir, "pkg/package.spec")
+        if "Source0:" in line:  # Dirty hack
+            return "Source0: %{pkgname}-%{version}.tar.gz"
 
-    def initialize_options(self):
-        pass
+        return line
 
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        self.pre_sdist()
-        self.run_command('sdist')
-        self.build_rpm()
-
-    def pre_sdist(self):
-        c = open(self.rpmspec + ".in").read()
-        open(self.rpmspec, "w").write(c.replace("@VERSION@", VERSION))
-
-    def build_rpm(self):
-        rpmbuild = os.path.join(self.curdir, "pkg/rpmbuild-wrapper.sh")
-        workdir = os.path.join(self.curdir, "dist")
-
-        cmd_s = "%s -w %s -s %s %s" % (rpmbuild, workdir, self.build_stage,
-                                       self.rpmspec)
-        subprocess.check_call(cmd_s, shell=True)
+    def _make_spec_file(self):
+        return [self._replace(l.rstrip()) for l
+                in open(self.spec_tmpl).readlines()]
 
 
-class RpmCommand(SrpmCommand):
-
-    build_stage = "b"
-
-
-_CLASSIFIERS = ["Development Status :: 4 - Beta",
-                "Intended Audience :: Developers",
-                "Programming Language :: Python",
-                "Programming Language :: Python :: 2",
-                "Programming Language :: Python :: 3",
-                "Programming Language :: Python :: 2.7",
-                "Programming Language :: Python :: 3.3",
-                "Programming Language :: Python :: 3.4",
-                "Programming Language :: Python :: 3.5",
-                "Programming Language :: Python :: 3.6",
-                "Operating System :: OS Independent",
-                "Topic :: Software Development :: Libraries :: Python Modules",
-                "Topic :: Text Processing :: Markup",
-                "Topic :: Utilities",
-                "License :: OSI Approved :: MIT License"]
-
-
-def _parse_requirements_txt(filepath="pkg/requirements.txt"):
-    return [l.rstrip() for l in open(filepath).readlines()
-            if l and not l.startswith('#')]
-
-
-setup(name=PACKAGE,
-      version=VERSION,
-      description="Backend module for python-anyconfig to load and dump Configobj data",
-      long_description=open("README.rst").read(),
-      author="Satoru SATOH",
-      author_email="ssato@redhat.com",
-      license="MIT",
-      url="https://github.com/ssato/python-anyconfig-configobj-backend",
-      classifiers=_CLASSIFIERS,
-      install_requires=_parse_requirements_txt(),
-      tests_require=_parse_requirements_txt("pkg/test_requirements.txt"),
-      packages=["anyconfig_configobj_backend"],
-      include_package_data=True,
-      cmdclass=dict(srpm=SrpmCommand, rpm=RpmCommand),
-      entry_points=open(os.path.join(os.curdir,
-                                     "pkg/entry_points.txt")).read(),
-)
+setuptools.setup(version=VERSION,
+                 cmdclass=dict(bdist_rpm=bdist_rpm))
 
 # vim:sw=4:ts=4:et:
