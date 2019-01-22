@@ -2,24 +2,19 @@
 language: python
 python:
     - 2.7
-    - 3.3
     - 3.4
     - 3.5
     - 3.6
+    - 3.7
 # see: http://docs.travis-ci.com/user/caching/#pip-cache
 cache: pip
-#matrix:
-#    include:
-#        - python: 2.4
-#          env: FULL="true"
-#        - python: 2.5
-#          env: FULL="true"
-#        - python: 2.6
-#          env: FULL="true"
-#        - python: 2.7
-#          env: FULL="true"
-##        - python: 3.2
-##          env: LANG="en_US.utf-8"
+# .. seealso:: https://github.com/travis-ci/travis-ci/issues/9815
+matrix:
+    include:
+        - python: 3.7
+          dist: xenial
+          sudo: true
+
 # see: http://docs.travis-ci.com/user/migrating-from-legacy/
 sudo: false
 install:
