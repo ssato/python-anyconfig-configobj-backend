@@ -35,11 +35,11 @@ Build & Install
 
 If you're Fedora or Red Hat Enterprise Linux user, try::
 
-  $ python setup.py srpm && mock dist/python-anyconfig-configobj-backend-<ver_dist>.src.rpm
+  $  python setup.py bdist_rpm --source-only && mock dist/python-anyconfig-configobj-backend-<ver_dist>.src.rpm
   
 or::
 
-  $ python setup.py rpm
+  $  python setup.py bdist_rpm
 
 and install built RPMs. 
 
