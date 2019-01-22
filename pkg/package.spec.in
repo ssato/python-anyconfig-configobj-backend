@@ -15,9 +15,8 @@ Release:        1%{?dist}
 Summary:        Backend for python-anyconfig to load and dump configobj data
 Group:          Development/Libraries
 License:        MIT
-URL:            https://github.com/ssato/%{name}
-#Source0:        https://github.com/ssato/%{name}/tarball/master/%{name}-%{version}.tar.gz
-Source0:        %{pkgname}-%{version}.tar.gz
+URL:            https://github.com/ssato/python-anyconfig-configobj-backend
+Source0:        %{url}/archive/RELEASE_%{version}.tar.gz
 BuildArch:      noarch
 
 %if 0%{?fedora} || 0%{?rhel} > 7
