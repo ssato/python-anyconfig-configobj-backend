@@ -5,6 +5,7 @@ curdir=${0%/*}
 docdir=${curdir}/../docs
 output=${curdir}/../README.rst
 readme_files="
+${docdir}/header.rst
 ${docdir}/badges.rst
 ${docdir}/about.rst
 ${docdir}/build_install.rst

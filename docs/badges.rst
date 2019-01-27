@@ -1,3 +1,4 @@
+
 .. image:: https://img.shields.io/travis/ssato/python-anyconfig-configobj-backend.svg
    :target: https://travis-ci.org/ssato/python-anyconfig-configobj-backend
    :alt: Test status
