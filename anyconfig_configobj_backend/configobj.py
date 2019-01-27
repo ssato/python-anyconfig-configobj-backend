@@ -4,7 +4,8 @@
 #
 r"""Configobj backend:
 
-- Format to support: configobj, http://goo.gl/JbP2Kp (readthedocs.org)
+- Format to support: configobj,
+  https://bit.ly/2TgURnL (https://configobj.readthedocs.io)
 - Requirements: configobj (https://pypi.python.org/pypi/configobj/)
 - Development Status :: 4 - Beta
 - Limitations: AFAIK, configobj does not keep the order of configuration items
