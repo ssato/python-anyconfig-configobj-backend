@@ -1,2 +1,0 @@
-[anyconfig_backends]
-configobj=anyconfig_configobj_backend:Parser
