@@ -1,7 +1,7 @@
-anyconfig
-configobj
+-r requirements.txt
 coveralls
-# flake8  # disabled until 'pkg_resources.VersionConflict' error.
+# disable if 'pkg_resources.VersionConflict' error happens:
+flake8 < 3.5.0
 nose
 pycodestyle
 pylint
