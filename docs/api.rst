@@ -2,11 +2,8 @@
 API reference
 =================
 
-:mod:`anyconfig_configobj_backend`
-====================================
-
 .. toctree::
 
-   api.configobj
+   anyconfig_configobj_backend.configobj
 
 .. vim:sw=2:ts=2:et:
