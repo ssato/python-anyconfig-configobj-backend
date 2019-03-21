@@ -16,6 +16,10 @@ python-anyconfig-configobj-backend
    :target: https://landscape.io/github/ssato/python-anyconfig-configobj-backend/master
    :alt: Code Health
 
+.. image:: https://readthedocs.org/projects/python-anyconfig-configobj-backend/badge/?version=latest
+   :target: http://python-anyconfig-configobj-backend.readthedocs.io/en/latest/?badge=latest
+   :alt: Doc Status
+
 .. vim:sw=2:ts=2:et:
 
 This is a backend module for python-anyconfig to load and dump configuration
