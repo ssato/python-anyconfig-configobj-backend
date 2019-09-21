@@ -38,7 +38,6 @@ BuildRequires:  python3-setuptools
 Summary:        %{summary}
 Requires:       python2-anyconfig
 Requires:       python2-configobj
-%endif
 %{?python_provide:%python_provide python2-%{pkgname}}
 
 %description -n python2-%{pkgname} %{desctxt}
