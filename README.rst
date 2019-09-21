@@ -51,20 +51,20 @@ There is a couple of ways to install this package:
 
   .. code-block:: console
 
-    $ pip install anyconfig-configobj-backend
+    $ pip3 install anyconfig-configobj-backend
 
 - pip from git repo:
 
   .. code-block:: console
 
-     $ pip install git+https://github.com/ssato/python-anyconfig-configobj-backend/
+     $ pip3 install git+https://github.com/ssato/python-anyconfig-configobj-backend/
 
 - Build RPMs from source: It's easy to build python-anyconfig with using rpm-build and mock:
 
   .. code-block:: console
 
     # Build Source RPM first and then build it with using mock (better way)
-    $ python3 setup.py bdist_rpm --source-only && mock dist/python3-anyconfig-configobj-<ver_dist>.src.rpm
+    $ python3 setup.py bdist_rpm --source-only && mock dist/python3-anyconfig-configobj-backend-<ver_dist>.src.rpm
 
   or
 
