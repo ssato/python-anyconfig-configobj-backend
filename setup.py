@@ -5,12 +5,12 @@ import setuptools
 import setuptools.command.bdist_rpm
 
 
-VERSION = "0.1.0"
-
 # For daily snapshot versioning mode:
+RELEASE = "1%{?dist}"
 if os.environ.get("_SNAPSHOT_BUILD", None) is not None:
     import datetime
-    VERSION = VERSION + datetime.datetime.now().strftime(".%Y%m%d")
+    RELEASE = RELEASE.replace('1',
+                              datetime.datetime.now().strftime("%Y%m%d"))
 
 
 class bdist_rpm(setuptools.command.bdist_rpm.bdist_rpm):
@@ -19,10 +19,13 @@ class bdist_rpm(setuptools.command.bdist_rpm.bdist_rpm):
     spec_tmpl = os.path.join(os.path.abspath(os.curdir),
                              "pkg/package.spec.in")
 
-    def _replace(self, line):
+    def _replace(self, line, rpmver):
         """Replace some strings in the RPM SPEC template"""
         if "@VERSION@" in line:
-            return line.replace("@VERSION@", VERSION)
+            return line.replace("@VERSION@", rpmver)
+
+        if "@RELEASE@" in line:
+            return line.replace("@RELEASE@", RELEASE)
 
         if "Source0:" in line:  # Dirty hack
             return "Source0: %{pkgname}-%{version}.tar.gz"
@@ -30,11 +33,13 @@ class bdist_rpm(setuptools.command.bdist_rpm.bdist_rpm):
         return line
 
     def _make_spec_file(self):
-        return [self._replace(l.rstrip()) for l
+        version = self.distribution.get_version()
+        rpmver = version.replace('-', '_')
+
+        return [self._replace(l.rstrip(), rpmver) for l
                 in open(self.spec_tmpl).readlines()]
 
 
-setuptools.setup(version=VERSION,
-                 cmdclass=dict(bdist_rpm=bdist_rpm))
+setuptools.setup(cmdclass=dict(bdist_rpm=bdist_rpm))
 
 # vim:sw=4:ts=4:et:
