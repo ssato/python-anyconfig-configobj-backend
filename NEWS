@@ -1,0 +1,34 @@
+* Sat Sep 21 2019 Satoru SATOH <satoru.satoh@gmail.com> - 0.1.0
+- change: drop py3{4,5} support
+- change: switch to utilize setup.cfg at a maximum
+- enhancement: add plugin and releng (build, install) test cases
+- fix: cleanup travis-ci stuff
+- fix: [doc] add API docs
+- fix: [rpm] cleanup and disable py2 build by default
+- other misc refactoring, code cleanups and fixes
+
+* Tue Jan  9 2018 Satoru SATOH <ssato@redhat.com> - 0.0.4-1
+- fix: do not install tests/*.py
+- fix: do not install tests/*.py
+- fix: s/install_require/install_requires/ in setup.py
+- other misc refactoring, code cleanups and fixes
+
+* Mon Jan  8 2018 Satoru SATOH <ssato@redhat.com> - 0.0.3-1
+- enhancement/fix: import a lot of enhancements and fixes from
+  (anyconfig)/tests/backend/configobj.py
+- enhancement/fix: import a lot of enhancements and fixes from
+  python-anyconfig-cbor-backend.git/setup.py
+- fix: pep8 was renamed to pycodestyle
+- fix: make it buildable w/ RHEL 7 environment
+- fix: add runtime requirements
+- refactor/fix: clean up the RPM SPEC w/ using macros such as
+  py2_{build,install}, autosetup and bcond_with{,out}
+- other misc refactoring, code cleanups and fixes
+
+* Tue Apr 30 2013 Satoru SATOH <ssato@redhat.com> - 0.0.2-1
+- Simplify the implementation by following the internal API changes in the
+  config parser base class
+- Refactor the RPM SPEC
+
+* Tue Apr 23 2013 Satoru SATOH <ssato@redhat.com> - 0.0.1-1
+- Initial packaging
