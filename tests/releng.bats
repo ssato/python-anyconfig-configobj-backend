@@ -42,7 +42,7 @@ function teardown () {
     run python3 setup.py bdist_wheel
     [[ ${status} -eq 0 ]]
 
-    run pip3 install -U -t ${WORKDIR} $(ls -1t dist/*.whl)
+    run pip3 install -U -t ${WORKDIR} $(ls -1t dist/*.whl | head -n 1)
     [[ ${status} -eq 0 ]]
 }
 
@@ -52,7 +52,7 @@ function teardown () {
     [[ ${status} -eq 0 ]]
 
     which mock 2>/dev/null >/dev/null || skip
-    run mock -r ${RPM_BUILD_DIST:?} $(ls -1t dist/*.src.rpm)
+    run mock -r ${RPM_BUILD_DIST:?} $(ls -1t dist/*.src.rpm | head -n 1)
     [[ ${status} -eq 0 ]]
 
 #   run dnf install -y --installroot ${WORKDIR} /var/lib/mock/${RPM_BUILD_DIST}/result/*.noarch.rpm
