@@ -1,6 +1,10 @@
+include LICENSE.MIT
 include MANIFEST.in
 include README.*
-include LICENSE.MIT
+include docs/*
 include pkg/*
-include setup.py
+include setup.*
+include tox.ini
 recursive-include anyconfig_configobj_backend *.py
+# for f in tests/**/*.* ; do echo ${f/*\./*.}; done | sort | uniq
+recursive-include tests *.py *.configobj
