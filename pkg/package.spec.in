@@ -1,5 +1,4 @@
 # disable debuginfo
-%global debug_package %{nil}
 %global pkgname anyconfig-configobj-backend
 
 %global desctxt \
@@ -8,6 +7,12 @@ data.\
 \
 python-anyconfig is a python library to provide common APIs to load dump\
 various configuration files like INI, JSON and YAML.
+
+%if 0%{?rhel} == 7 || 0%{?epel} == 7
+%bcond_without python2
+%else
+%bcond_with python2
+%endif
 
 Name:           python-%{pkgname}
 Version:        @VERSION@
@@ -19,39 +24,26 @@ URL:            https://github.com/ssato/python-anyconfig-configobj-backend
 Source0:        %{url}/archive/RELEASE_%{version}.tar.gz
 BuildArch:      noarch
 
-%if 0%{?fedora} || 0%{?rhel} > 7
-%bcond_without python3
-%else
-%bcond_with python3
-%endif
-
-%if 0%{?rhel} == 7
-BuildRequires:  python-devel
-BuildRequires:  python-setuptools
-%else
+%if %{with python2}
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 %endif
-%if %{with python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
-%endif
 
 %description    %{desctxt}
 
+%if %{with python2}
 %package     -n python2-%{pkgname}
 Summary:        %{summary}
 Requires:       python2-anyconfig
-%if 0%{?rhel} == 7
-Requires:       python-configobj
-%else
 Requires:       python2-configobj
 %endif
 %{?python_provide:%python_provide python2-%{pkgname}}
 
 %description -n python2-%{pkgname} %{desctxt}
+%endif
 
-%if %{with python3}
 %package     -n python3-%{pkgname}
 Summary:        %{summary}
 Requires:       python3-anyconfig
@@ -59,39 +51,35 @@ Requires:       python3-configobj
 %{?python_provide:%python_provide python3-%{pkgname}}
 
 %description -n python3-%{pkgname} %{desctxt}
-%endif
 
 %prep
 %autosetup   -n %{pkgname}-%{version}
 
 %build
+%if %{with python2}
 %py2_build
-%if %{with python3}
-%py3_build
 %endif
+%py3_build
 
 %install
+%if %{with python2}
 %py2_install
-%if %{with python3}
-%py3_install
 %endif
+%py3_install
 
+%if %{with python2}
 %files       -n python2-%{pkgname}
 %doc README.rst
-%if 0%{?rhel} == 7
-%{python_sitelib}/*
-%else
 %{python2_sitelib}/*
 %endif
 
-%if %{with python3}
 %files       -n python3-%{pkgname}
 %doc README.rst
 %{python3_sitelib}/*
-%endif
 
 %changelog
 * Tue Jan  9 2018 Satoru SATOH <ssato@redhat.com> - 0.0.4-1
+- fix: do not install tests/*.py
 - fix: do not install tests/*.py
 - fix: s/install_require/install_requires/ in setup.py
 - other misc refactoring, code cleanups and fixes
