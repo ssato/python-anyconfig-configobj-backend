@@ -1,3 +1,10 @@
+* Sat Sep 21 2019 Satoru SATOH <satoru.satoh@gmail.com> - 0.1.1
+- fix: add missing dependency to configobj
+- fix: get the version info from */__init__.py
+- fix: [doc] correct inconsistency between README.rst and doc/*.rst
+- enhancement: [rpm] allow dynamic revisioning
+- other relatively minor refactoring, code cleanups and fixes
+
 * Sat Sep 21 2019 Satoru SATOH <satoru.satoh@gmail.com> - 0.1.0
 - change: drop py3{4,5} support
 - change: switch to utilize setup.cfg at a maximum
