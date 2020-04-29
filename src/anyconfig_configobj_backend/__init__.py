@@ -1,9 +1,8 @@
 """anyconfig configobj backend module.
 """
 from __future__ import absolute_import
-from .configobj import Parser
+from .configobj_ import Parser
 
-__author__ = "Satoru SATOH"
 __version__ = "0.1.1"
 __all__ = ["Parser", ]
 

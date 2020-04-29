@@ -6,6 +6,6 @@ include docs/*
 include pkg/*
 include setup.*
 include tox.ini
-recursive-include anyconfig_configobj_backend *.py
+recursive-include src *.py
 # for f in tests/**/*.* ; do echo ${f/*\./*.}; done | sort | uniq
-recursive-include tests *.py *.configobj *.bats
+recursive-include tests *.py *.configobj *.bats *.txt
