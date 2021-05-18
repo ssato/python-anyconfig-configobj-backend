@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013 - 2019 Satoru SATOH <satoru.satoh @ gmail.com>
+# Copyright (C) 2013 - 2021 Satoru SATOH <satoru.satoh @ gmail.com>
 # License: MIT
 #
 r"""Configobj backend:
@@ -28,18 +28,19 @@ Chnagelog:
      result if possible. Also these became not distinguished because these will
      be passed to configobj.Configuration anyway.
 """
-from __future__ import absolute_import
-
+import inspect
 import os
-import configobj
-import anyconfig.backend.base
 
-from anyconfig.compat import getargspec
+import configobj
+
+import anyconfig.backend.base
 
 
 try:
-    _LOAD_OPTS = [a for a in getargspec(configobj.ConfigObj).args
-                  if a not in "self infile".split()]
+    _LOAD_OPTS = [
+        a for a in inspect.getfullargspec(configobj.ConfigObj).args
+        if a not in {'self', 'infile'}
+    ]
 except (TypeError, AttributeError):
     _LOAD_OPTS = ("options configspec encoding interpolation raise_errors"
                   "list_values create_empty file_error stringify"
@@ -74,7 +75,8 @@ def load(path_or_strm, container, **opts):
 
 
 class Parser(anyconfig.backend.base.StreamParser,
-             anyconfig.backend.base.BinaryFilesMixin):
+             anyconfig.backend.base.BinaryLoaderMixin,
+             anyconfig.backend.base.BinaryDumperMixin):
     """
     Parser for Ini-like config files which configobj supports.
     """

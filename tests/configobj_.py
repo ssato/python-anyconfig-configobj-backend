@@ -4,10 +4,9 @@
 #
 # pylint: disable=missing-docstring,invalid-name,too-few-public-methods
 # pylint: disable=ungrouped-imports
-from __future__ import absolute_import
 import os.path
 
-from anyconfig.compat import OrderedDict as ODict
+from collections import OrderedDict as ODict
 
 import anyconfig_configobj_backend as TT
 import tests.common as TBC
