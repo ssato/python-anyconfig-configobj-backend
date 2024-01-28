@@ -73,5 +73,5 @@ class Loader(base.Base, anyconfig.backend.base.BinaryLoaderMixin):
 
         :return: Dict-like object holding config parameters
         """
-        return self.load_from_stream(io.BytesIO(content),
+        return self.load_from_stream(io.BytesIO(content),  # type: ignore
                                      container, **kwargs)
