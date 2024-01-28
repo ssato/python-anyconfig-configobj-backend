@@ -1,0 +1,5 @@
+[section 2]    # an inline comment
+keyword8 = "value 9"
+keyword9 = value10     # an inline comment
+# The 'final_comment'
+# Which also may be several lines
