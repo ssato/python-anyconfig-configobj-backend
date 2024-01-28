@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 #
 # pylint:disable=invalid-name
+"""conf.py for sphinx."""
 import sys
-import os
+import pathlib
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                                os.path.pardir)))
+sys.path.insert(0, str(pathlib.Path(__file__).parent.resolve() / 'src'))
 
-extensions = ['sphinx.ext.autodoc']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx_autodoc_typehints'
+]
 source_suffix = '.rst'
 master_doc = 'index'
 
 project = u'python-anyconfig-configobj-backend'
-copyright = u'2015, Satoru SATOH <satoru.satoh@gmail.com>'
-version = '0.0.4'
+copyright = u'2024, Satoru SATOH <satoru.satoh@gmail.com>'
+version = '0.2.0'
 release = version
 
 exclude_patterns = []
