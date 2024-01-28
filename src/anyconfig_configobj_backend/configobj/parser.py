@@ -34,7 +34,7 @@ Chnagelog:
 """
 import anyconfig.backend.base
 
-from . import base, loader, dumper
+from . import loader, dumper
 
 
 class Parser(
