@@ -1,0 +1,4 @@
+# This is the 'initial_comment'
+# Which may be several lines
+keyword1 = value1
+'keyword 2' = 'value 2'

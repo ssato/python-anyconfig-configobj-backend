@@ -1,0 +1,17 @@
+{
+  "section 1": {
+    "keyword 3": "value 3",
+    "keyword 4": [
+      "value4",
+      "value 5",
+      "value 6"
+    ],
+    "sub-section": {
+      "keyword 5": "value 7",
+      "keyword 6": "A multiline value,\nthat spans more than one line :-)\nThe line breaks are included in the value.",
+      "sub-sub-section": {
+        "keyword 7": "value 8"
+      }
+    }
+  }
+}

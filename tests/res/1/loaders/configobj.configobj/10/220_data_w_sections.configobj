@@ -1,0 +1,16 @@
+[section 1]
+    # This comment goes with keyword 3
+    keyword 3 = value 3
+    keyword 4 = value4, value 5, value 6
+    
+    [[sub-section]]    # an inline comment
+        # sub-section is inside "section 1"
+        keyword 5 = value 7
+        keyword 6 = '''A multiline value,
+that spans more than one line :-)
+The line breaks are included in the value.'''
+        
+        [[[sub-sub-section]]]
+            # sub-sub-section is *in* 'sub-section'
+            # which is in 'section 1'
+            keyword 7 = value 8
